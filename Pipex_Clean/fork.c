@@ -6,7 +6,7 @@
 /*   By: abdsayed <abdsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 17:25:28 by abdsayed          #+#    #+#             */
-/*   Updated: 2024/09/30 16:41:59 by abdsayed         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:01:32 by abdsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ void	secondchild(t_pipex *pipex)
 		pipex->fdo = open(pipex->av[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (pipex->fdo < 0)
 			(perror(pipex->av[4]), exitfree(NULL, pipex, 1));
-		dup2(pipex->fdo, 1);
+		dup2(pipex->fdo, STDOUT_FILENO);
 		close(pipex->fdo);
-		dup2(pipex->pipes[0], 0);
+		dup2(pipex->pipes[0], STDIN_FILENO);
 		(close(pipex->pipes[1]), close(pipex->pipes[0]));
 		if (ft_strchr(pipex->av[3], '/') != NULL)
 			pipex->token = pipex->av[3];
@@ -123,13 +123,13 @@ void	firstchild(t_pipex *pipex)
 		dup2(pipex->fdi, 0);
 		close(pipex->fdi);
 		dup2(pipex->pipes[1], 1);
+		(close(pipex->pipes[1]), close(pipex->pipes[0]));
 		if (ft_strchr(pipex->av[2], '/') != NULL)
 			pipex->token = pipex->av[2];
 		else if (pipex->bole == 0)
 			findtoken(pipex, pipex->av[2]);
 		else
 			exitfree("Error", pipex, 1);
-		(close(pipex->pipes[1]), close(pipex->pipes[0]));
 		if (pipex->token == NULL)
 			exitfree("Error", pipex, 1);
 		exec(pipex->token, pipex->av[2], pipex->env, pipex);

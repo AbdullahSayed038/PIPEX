@@ -1,0 +1,2 @@
+./pipex /dev/urandom cat "cat" cat "head -10" ooooo
+// should not hang
