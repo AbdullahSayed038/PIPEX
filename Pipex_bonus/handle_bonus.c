@@ -6,7 +6,7 @@
 /*   By: abdsayed <abdsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:32:58 by abdsayed          #+#    #+#             */
-/*   Updated: 2024/10/01 19:02:08 by abdsayed         ###   ########.fr       */
+/*   Updated: 2024/10/02 17:55:54 by abdsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	initialize(t_pipex *pipex, char **args, char **env)
 	pipex->pid2 = -1;
 	pipex->pipes[0] = -1;
 	pipex->pipes[1] = -1;
+	pipex->docpipe[0] = -1;
+	pipex->docpipe[1] = -1;
 	pipex->path = NULL;
 	pipex->token = NULL;
 	return ;
@@ -77,7 +79,7 @@ void	findtoken2(char *cmd, char **tokens, t_pipex *pipex)
 	char	*tokenss;
 
 	i = 0;
-	while(tokens[i])
+	while (tokens[i])
 	{
 		tokenss = ft_strjoin(tokens[i], cmd);
 		if (tokenss == NULL)
@@ -99,4 +101,3 @@ void	findtoken2(char *cmd, char **tokens, t_pipex *pipex)
 	(free(cmd), pipex->token = NULL);
 	return ;
 }
-

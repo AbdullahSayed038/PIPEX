@@ -6,7 +6,7 @@
 /*   By: abdsayed <abdsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:20:36 by abdsayed          #+#    #+#             */
-/*   Updated: 2024/10/01 20:23:40 by abdsayed         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:39:15 by abdsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	forking(t_pipex *pipex, int ac)
 	return ;
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_pipex	pipex;
-	int w;
-	
+	int		w;
+
 	w = 0;
 	initialize(&pipex, av, env);
 	if (ac < 5)
@@ -40,10 +40,12 @@ int main(int ac, char **av, char **env)
 	pipex.path = get_path_variable(env);
 	if (pipex.path == NULL)
 		pipex.bole = 1;
-	forking(&pipex, ac);
-	while (w < ac - 3)
+	if (ft_strncmp(av[1], "here_doc", 9) == 0)
+		here_doc(&pipex);
+	else
+		forking(&pipex, ac);
+	while (w < ac - 3 - (ft_strncmp(av[1], "here_doc", 9) == 0))
 	{
-		ft_printf("ok\n");
 		wait(NULL);
 		w++;
 	}
