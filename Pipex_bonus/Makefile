@@ -1,6 +1,6 @@
 CC		:= cc
 
-CFLAGS	:= -Wall -Werror -Wextra -g3 -O3 -fsanitize=address,undefined
+CFLAGS	:= -Wall -Werror -Wextra -g3 -O3 # -fsanitize=address,undefined
 
 SRCS	:= pipex_bonus.c fork_bonus.c handle_bonus.c utils_bonus.c here_doc.c
 
