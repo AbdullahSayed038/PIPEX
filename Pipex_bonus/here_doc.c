@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdsayed <abdsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abdsayed <abdullahsayed@42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:54:48 by abdsayed          #+#    #+#             */
-/*   Updated: 2024/10/02 20:19:13 by abdsayed         ###   ########.fr       */
+/*   Updated: 2024/10/02 21:45:37 by abdsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,20 @@ void	startforking(t_pipex *pipex)
 void	here_doc(t_pipex *pipex)
 {
 	char	*str;
+	int		len;
 
 	if (pipe(pipex->docpipe) == -1)
 		exitfree("Error18", pipex, 1);
 	str = get_next_line(0);
-	int len = ft_strlen(pipex->av[2]);
+	len = ft_strlen(pipex->av[2]);
 	pipex->av[2][len] = '\n';
 	while (ft_strncmp(pipex->av[2], str, len + 1))
 	{
-		dprintf(STDERR_FILENO, "%s\n", str);
 		if (write(pipex->docpipe[1], str, ft_strlen(str)) < 0)
 			exitfree("Error", pipex, 1);
 		free(str);
 		str = get_next_line(0);
 	}
-	dprintf(STDERR_FILENO, "%s\n", "OUTSIDE");
 	free(str);
 	close(pipex->docpipe[1]);
 	startforking(pipex);
